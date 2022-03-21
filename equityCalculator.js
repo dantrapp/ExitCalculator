@@ -110,9 +110,11 @@ function realTimeText(x, y){
    formInput.onkeyup = function(){
      if (x === 'marketcap' || x === 'granted' || x === 'exercised'){
      document.getElementById(y).innerHTML = dollar.format(formInput.value * 1_000_000);
-     } else if (x === 'equity-percentage' || x === 'sell'){
+     } else if (x === 'equity-percentage'){
       document.getElementById(y).innerHTML = percent.format(formInput.value / 100);
-   } else {
+   }  else if ( x === 'sell'){
+    document.getElementById(y).innerHTML = percent.format(formInput.value);
+ }else {
     document.getElementById(y).innerHTML = formInput.value;
    }
   }
