@@ -24,19 +24,26 @@ function handleFormSubmit(e){
   const pricePerShareCurrent = (tCMC / 10_000_000);
   const pricePerShareGrant = (gMC / 10_000_000);
   const pricePerShareEx = (tMCE / 10_000_000);
-  const shares = (10_000_000 * eqPF);//market cap at grant;
+  const shares = (10_000_000 * eqPF);//based on market cap at grant;
   const shareValueAtGrant = (pricePerShareGrant * shares);//value of shares at grant;
   const currentShareValue = (pricePerShareCurrent * shares);//value of shares at grant;
   const costToExercise = (pricePerShareEx * shares);//cost to exercise shares;
 
+  //DILUTION
   function getDilution(x) {
     const dilutionRounds = [0.8, 0.64, 0.544, 0.4896, 0.44064, 0.396576, 0.3569184];
     return dilutionRounds[x - 1] //total diluted equity percentage remaining
   }
 
-  const dilutedEquityPercentage = eqPF * (getDilution(rounds) * 100) 
+  const dilutedEquityPercentage = eqPF * (getDilution(rounds) * 100);
   const dilutedEquityValue = (tCMC / 100) * dilutedEquityPercentage;
 
+  //SELL SHARES
+  const soldShares = shares * sell; //50_000 shares x 50%
+  const soldShareValue = dilutedEquityValue * sell; //ex. $10_000_000 x 50%
+  const remainingShares = shares - soldShares;
+  const remainingShareValue = dilutedEquityValue - soldShareValue;
+  const perShareProfit = soldShareValue - costToExercise;
 
 //add form submit data + unique date stamp to newData object to push to listData
   const newData = {
@@ -56,6 +63,11 @@ function handleFormSubmit(e){
     exercised,
     equityPercentage,
     sell,
+    soldShares,
+    soldShareValue,
+    remainingShares,
+    remainingShareValue,
+    perShareProfit,
     rounds,
     dilutedEquityPercentage,
     dilutedEquityValue,
@@ -95,15 +107,22 @@ function displayData(){
         <ul class="text-start">
 
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border" style="background-color: #fff;">
-        <h4 class="h3 text-primary">Current Values</h4>
-        <li><b>Total Company Market Cap:</b> $${item.tCMC}</li>
+        <h4 class="h3 text-primary">Quick Numbers</h4>
+        <li><b>Total Company Market Cap (FMV):</b> $${item.tCMC}</li>
+        <li><b>Your Total Equity Stake Value (diluted):</b> $${item.dilutedEquityValue}</li>
+        <li><b>Your Total Equity Stake (diluted):</b> ${item.dilutedEquityPercentage}%</li>
+        <li><b>Shares Sold:</b> ${item.soldShares}</li>
+        <li><b>Shares Sold Value:</b> $${item.soldShareValue}</li>
+        <li><b>Total Pre-Tax Profit From Share Sale:</b> $${item.perShareProfit}</li>
+        <li><b>Your Remaining Shares:</b> ${item.remainingShares}</li>
+        <li><b>Value Of Remaining Shares:</b> $${item.remainingShareValue}</li>
         </br>
         </div>
 
 
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border bg-light bg-gradient">
         <h4 class="h3 text-primary">Grant Date Values</h4>
-        <p>These are the values of your equity/options at grant. For those who are granted shares pre-seed or at the seed stage as a founder or early employee, your strike price may be at or near par value of $0.001/share and would be filing a 83b election for Full Market Value of your equity stake (FMV) with the IRS within 30 days of grant date. In some cases the company will already have a 409a valuation at the seed stage and the current FMV divided by the total authorized shares of the company (typically 10m) is the basis for strike price at grant. </p>
+        <p>These are the values of your equity/options at grant. For those who are granted shares pre-seed or at the seed stage as a founder or early employee, your strike price may be at or near par value of $0.001/share and would be filing a 83b election for Full Market Value of your equity stake (FMV) with the IRS within 30 days of grant date. In some cases the company will already have a 409a valuation at the seed stage and the current FMV divided by the total authorized shares of the company (typically 10m at formation) is the basis for strike price at grant. </p>
         <li><b>Market Cap When Shares Granted:</b> $${item.gMC}</li>
         <li>Initial Equity Percentage: ${item.equityPercentage}%</li>
         <li>Total Number Of Shares: ${item.shares}</li>
@@ -122,15 +141,21 @@ function displayData(){
         </br>
         </div>
 
-
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border bg-light bg-gradient">
-        <h4 class="h3 text-primary">Exit Values</h4>
-        <li><b>Market Cap When Shares Exercised/Purchased:</b> $${item.tMCE}</li>
-        <li>Shares Sold: ${item.sell}%</li>
-        <li>Shares Remaining: ${item.sell}%</li>
+        <h4 class="h3 text-primary">Exercise Values</h4>
         <li>Total Per Share Value At Exercise: $${item.pricePerShareEx}</li>
         <li>Total Cost To Exercise Shares: $${item.costToExercise}</li>
         <li>Current Total Per Share Value: $${item.pricePerShareCurrent}</li>
+        </br>
+        </div>
+
+        <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border">
+        <h4 class="h3 text-primary">Exit Values</h4>
+        <li><b>Market Cap When Shares Exercised/Purchased:</b> $${item.tMCE}</li>
+        <li>Shares Sold: ${item.soldShares}</li>
+        <li>Shares Sold Value: $${item.soldShareValue}</li>
+        <li>Total Pre-Tax Profit From Share Sale: $${item.perShareProfit}</li>
+        <li>Shares Remaining: ${item.remainingShares}</li>
         </div>
       
 
