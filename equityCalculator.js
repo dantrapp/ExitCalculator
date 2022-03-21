@@ -8,7 +8,12 @@ let listData = []; //original UGI form data + calculations on UGI data.
 
 //FORMATTING
 
+const number = formatUSD = new Intl.NumberFormat('en-us')
+
 const dollar = formatUSD = new Intl.NumberFormat('en-us', {style: 'currency', currency: 'USD'})
+
+const percent = formatPercent = new Intl.NumberFormat('en-us', {style: 'percent', maximumFractionDigits: 2});
+
 
 
 //FUNCTIONS
@@ -116,13 +121,13 @@ function displayData(){
         <h4 class="h3 text-primary">Quick Numbers</h4>
         <li><b>Total Company Market Cap (FMV):</b> ${dollar.format(item.tCMC)}</li>
         <li><b>Your Total Equity Stake Value (diluted):</b> ${dollar.format(item.dilutedEquityValue)}</li>
-        <li><b>Your Total Equity Stake (diluted):</b> ${item.dilutedEquityPercentage}%</li>
-        <li><b>Shares Sold:</b> ${item.soldShares}</li>
+        <li><b>Your Total Equity Stake (diluted):</b> ${percent.format(item.dilutedEquityPercentage / 100)}</li>
+        <li><b>Shares Sold:</b> ${number.format(item.soldShares)}</li>
         <li><b>Shares Sold Value:</b> ${dollar.format(item.soldShareValue)}</li>
         <li><b>Total Pre-Tax Profit From Share Sale:</b> ${dollar.format(item.perShareProfit)}</li>
-        <li><b>Your Remaining Shares:</b> ${item.remainingShares}</li>
+        <li><b>Your Remaining Shares:</b> ${number.format(item.remainingShares)}</li>
         <li><b>Value Of Remaining Shares:</b> ${dollar.format(item.remainingShareValue)}</li>
-        <li><b>Remaining Equity Stake:</b> ${item.remainingEquityPercentage}%</li>
+        <li><b>Remaining Equity Stake:</b> ${percent.format(item.remainingEquityPercentage / 100)}</li>
         </br>
         </div>
 
@@ -131,8 +136,8 @@ function displayData(){
         <h4 class="h3 text-primary">Grant Date Values</h4>
         <p>These are the values of your equity/options at grant. For those who are granted shares pre-seed or at the seed stage as a founder or early employee, your strike price may be at or near par value of $0.001/share and would be filing a 83b election for Full Market Value of your equity stake (FMV) with the IRS within 30 days of grant date. In some cases the company will already have a 409a valuation at the seed stage and the current FMV divided by the total authorized shares of the company (typically 10m at formation) is the basis for strike price at grant. </p>
         <li><b>Market Cap When Shares Granted:</b> ${dollar.format(item.gMC)}</li>
-        <li>Initial Equity Percentage: ${item.equityPercentage}%</li>
-        <li>Total Number Of Shares: ${item.shares}</li>
+        <li>Initial Equity Percentage: ${percent.format(item.equityPercentage / 100)}</li>
+        <li>Total Number Of Shares: ${number.format(item.shares)}</li>
         <li>Total Per Share Value (strike price) At Grant: ${dollar.format(item.pricePerShareGrant)}</li>
         <li>Total Value Of Shares At Grant: ${dollar.format(item.shareValueAtGrant)}</li>
         </br>
@@ -141,9 +146,9 @@ function displayData(){
 
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border" style="background-color: #FFF;">
         <h4 class="h3 text-primary">Dilution Values</h4>
-        <p>These are the estimated dilution values of your equity from funding rounds. As a rough estimate we use this formula for dilution (Series A: 20%, Series B: 20%, Series C: 15%, Series D - F: 10%) if your company has raised 3 rounds post-seed, they're at a Series C stage and your equity has been diluted to around 49% of your initial ${item.equityPercentage}% equity stake.</p>
+        <p>These are the estimated dilution values of your equity from funding rounds. As a rough estimate we use this formula for dilution (Series A: 20%, Series B: 20%, Series C: 15%, Series D - F: 10%) if your company has raised 3 rounds post-seed, they're at a Series C stage and your equity has been diluted to around 49% of your initial ${percent.format(item.equityPercentage / 100)} equity stake.</p>
         <li>Total Funding Rounds: ${item.rounds}</li>
-        <li>Total Diluted Equity Percentage Remaining: ${item.dilutedEquityPercentage}%</li>
+        <li>Total Diluted Equity Percentage Remaining: ${percent.format(item.dilutedEquityPercentage /100)}</li>
         <li>Current Equity Value After Dilution: ${dollar.format(item.dilutedEquityValue)}</li>
         </br>
         </div>
@@ -151,7 +156,7 @@ function displayData(){
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border bg-light bg-gradient">
         <h4 class="h3 text-primary">Exercise Values</h4>
         <li>Total Per Share Value At Exercise: ${dollar.format(item.pricePerShareEx)}</li>
-        <li>Total Cost To Exercise Shares: ${dollar.format(item.costToExercise)}</li>
+        <li>Total Cost To Exercise (${number.format(item.shares)}) Shares: ${dollar.format(item.costToExercise)}</li>
         <li>Current Total Per Share Value: ${dollar.format(item.pricePerShareCurrent)}</li>
         </br>
         </div>
@@ -159,10 +164,10 @@ function displayData(){
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border">
         <h4 class="h3 text-primary">Exit Values</h4>
         <li><b>Market Cap When Shares Exercised/Purchased:</b> ${dollar.format(item.tMCE)}</li>
-        <li>Shares Sold: ${item.soldShares}</li>
+        <li>Shares Sold: ${number.format(item.soldShares)}</li>
         <li>Shares Sold Value: ${dollar.format(item.soldShareValue)}</li>
         <li>Total Pre-Tax Profit From Share Sale: ${dollar.format(item.perShareProfit)}</li>
-        <li>Shares Remaining: ${item.remainingShares}</li>
+        <li>Shares Remaining: ${number.format(item.remainingShares)}</li>
         </div>
       
 
