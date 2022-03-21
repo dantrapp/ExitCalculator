@@ -1,8 +1,12 @@
 //Startup Equity Exit Calculator
+//Dan Trapp 
+
 //Query Selectors
 const equityCalc = document.querySelector('#equity-calculator'); //equity calculator container
 const equityDataContainer = document.querySelector('#equity-data-container'); //equity calculator container
 let listData = []; //original UGI form data + calculations on UGI data. 
+
+
 //FUNCTIONS
 function handleFormSubmit(e){
   e.preventDefault(); //prevent page refresh on form
@@ -29,7 +33,7 @@ function handleFormSubmit(e){
   const currentShareValue = (pricePerShareCurrent * shares);//value of shares at grant;
   const costToExercise = (pricePerShareEx * shares);//cost to exercise shares;
 
-  //DILUTION
+  //DILUTION CALCULATIONS
   function getDilution(x) {
     const dilutionRounds = [0.8, 0.64, 0.544, 0.4896, 0.44064, 0.396576, 0.3569184];
     return dilutionRounds[x - 1] //total diluted equity percentage remaining
@@ -38,14 +42,14 @@ function handleFormSubmit(e){
   const dilutedEquityPercentage = eqPF * (getDilution(rounds) * 100);
   const dilutedEquityValue = (tCMC / 100) * dilutedEquityPercentage;
 
-  //SELL SHARES
+  //SELL SHARES CALCULATIONS
   const soldShares = shares * sell; //50_000 shares x 50%
   const soldShareValue = dilutedEquityValue * sell; //ex. $10_000_000 x 50%
   const remainingShares = shares - soldShares;
   const remainingShareValue = dilutedEquityValue - soldShareValue;
   const perShareProfit = soldShareValue - costToExercise;
 
-//add form submit data + unique date stamp to newData object to push to listData
+//add UGI data + ID (date stamp) to newData object to push to listData for later use (ex. item.mc, .etc)
   const newData = {
     mc,
     tCMC, 
@@ -85,10 +89,6 @@ function handleFormSubmit(e){
 }
 
 //function to map listData array items, perform calculations and push to calcData array 
-
-
-
-
 
 function displayData(){
 
@@ -170,15 +170,15 @@ function displayData(){
   `
   ).join(''); //don't forget to add join, son!
 
-  equityDataContainer.innerHTML = tempString; //push tempstring to equity data container on index.html so the calculator will actually work. This is where the magic happens. beep. bop. 
+  equityDataContainer.innerHTML = tempString; //push tempstring to equity data container on index.html to see calculations output
 }
 
-//Mirror State To Local Storage; take the current state of the UI and store it in the users Local Storage. TBD if the live version will include this feature, it's more gimmicky than helpful in this instance. It's not Pinterest, bruh.
+//Mirror State To Local Storage; take the current state of the UI and store it in the users Local Storage. TBD if the live version will include this feature, it's more gimmicky than helpful in this instance. 
 function mirrorState(){
-  localStorage.setItem('equityDataContainer.list', JSON.stringify(listData));
+  localStorage.setItem('equityDataContainer.list', JSON.stringify(listData)); 
 }
 
-//check users local storage. If null or equal to empty array (if deleted during session), we clearly don't want to try to pull nothing from local storage and display it...because...um...it'd be nothing and wouldn't display. 
+//check users local storage. If null or equal to empty array (if deleted during session), we clearly don't want to try to pull nothing from local storage and display it...because...um...there would be nothing and wouldn't display. 
 function initLoadUI(){
   const tempLocalStorage = localStorage.getItem('equityDataContainer.list')
   if (tempLocalStorage === null || tempLocalStorage === [])return;
