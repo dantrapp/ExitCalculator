@@ -57,7 +57,7 @@ function handleFormSubmit(e){
   const remainingShares = shares - soldShares;
   const remainingShareValue = dilutedEquityValue - soldShareValue;
   const remainingEquityPercentage = dilutedEquityPercentage * (1 - sell);
-  const perShareProfit = soldShareValue - costToExercise;
+  const perShareProfit = soldShareValue - (costToExercise * sell);
 
 //add UGI data + ID (date stamp) to newData object to push to listData for later use (ex. item.mc, .etc)
   const newData = {
@@ -121,7 +121,7 @@ function displayData(){
         <h4 class="h3 text-primary">Quick Numbers</h4>
         <li><b>Total Company Market Cap (FMV):</b> ${dollar.format(item.tCMC)}</li>
         <li><b>Your Total Equity Stake Value (diluted):</b> ${dollar.format(item.dilutedEquityValue)}</li>
-        <li><b>Your Total Equity Stake (diluted):</b> ${percent.format(item.dilutedEquityPercentage / 100)}</li>
+        <li><b>Your Total Equity Stake (diluted from ${percent.format(item.equityPercentage / 100)}):</b> ${percent.format(item.dilutedEquityPercentage / 100)}</li>
         <li><b>Shares Sold:</b> ${number.format(item.soldShares)}</li>
         <li><b>Shares Sold Value:</b> ${dollar.format(item.soldShareValue)}</li>
         <li><b>Total Pre-Tax Profit From Share Sale:</b> ${dollar.format(item.perShareProfit)}</li>
