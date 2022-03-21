@@ -6,6 +6,10 @@ const equityCalc = document.querySelector('#equity-calculator'); //equity calcul
 const equityDataContainer = document.querySelector('#equity-data-container'); //equity calculator container
 let listData = []; //original UGI form data + calculations on UGI data. 
 
+//FORMATTING
+
+const dollar = formatUSD = new Intl.NumberFormat('en-us', {style: 'currency', currency: 'USD'})
+
 
 //FUNCTIONS
 function handleFormSubmit(e){
@@ -47,6 +51,7 @@ function handleFormSubmit(e){
   const soldShareValue = dilutedEquityValue * sell; //ex. $10_000_000 x 50%
   const remainingShares = shares - soldShares;
   const remainingShareValue = dilutedEquityValue - soldShareValue;
+  const remainingEquityPercentage = dilutedEquityPercentage * (1 - sell);
   const perShareProfit = soldShareValue - costToExercise;
 
 //add UGI data + ID (date stamp) to newData object to push to listData for later use (ex. item.mc, .etc)
@@ -71,6 +76,7 @@ function handleFormSubmit(e){
     soldShareValue,
     remainingShares,
     remainingShareValue,
+    remainingEquityPercentage,
     perShareProfit,
     rounds,
     dilutedEquityPercentage,
@@ -101,21 +107,22 @@ function displayData(){
     <div class="col">
       <div class="card mb-4 rounded-5 shadow-sm border-light">
        <div class="card-header py-3 text-white bg-dark bg-gradient border-light">
-          <h4 class="my-4">Market Cap $${item.tCMC}</h4>
+          <h4 class="my-4">Market Cap ${dollar.format(item.tCMC)}</h4>
           </div>
         <div class="card-body">
         <ul class="text-start">
 
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border" style="background-color: #fff;">
         <h4 class="h3 text-primary">Quick Numbers</h4>
-        <li><b>Total Company Market Cap (FMV):</b> $${item.tCMC}</li>
-        <li><b>Your Total Equity Stake Value (diluted):</b> $${item.dilutedEquityValue}</li>
+        <li><b>Total Company Market Cap (FMV):</b> ${dollar.format(item.tCMC)}</li>
+        <li><b>Your Total Equity Stake Value (diluted):</b> ${dollar.format(item.dilutedEquityValue)}</li>
         <li><b>Your Total Equity Stake (diluted):</b> ${item.dilutedEquityPercentage}%</li>
         <li><b>Shares Sold:</b> ${item.soldShares}</li>
-        <li><b>Shares Sold Value:</b> $${item.soldShareValue}</li>
-        <li><b>Total Pre-Tax Profit From Share Sale:</b> $${item.perShareProfit}</li>
+        <li><b>Shares Sold Value:</b> ${dollar.format(item.soldShareValue)}</li>
+        <li><b>Total Pre-Tax Profit From Share Sale:</b> ${dollar.format(item.perShareProfit)}</li>
         <li><b>Your Remaining Shares:</b> ${item.remainingShares}</li>
-        <li><b>Value Of Remaining Shares:</b> $${item.remainingShareValue}</li>
+        <li><b>Value Of Remaining Shares:</b> ${dollar.format(item.remainingShareValue)}</li>
+        <li><b>Remaining Equity Stake:</b> ${item.remainingEquityPercentage}%</li>
         </br>
         </div>
 
@@ -123,11 +130,11 @@ function displayData(){
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border bg-light bg-gradient">
         <h4 class="h3 text-primary">Grant Date Values</h4>
         <p>These are the values of your equity/options at grant. For those who are granted shares pre-seed or at the seed stage as a founder or early employee, your strike price may be at or near par value of $0.001/share and would be filing a 83b election for Full Market Value of your equity stake (FMV) with the IRS within 30 days of grant date. In some cases the company will already have a 409a valuation at the seed stage and the current FMV divided by the total authorized shares of the company (typically 10m at formation) is the basis for strike price at grant. </p>
-        <li><b>Market Cap When Shares Granted:</b> $${item.gMC}</li>
+        <li><b>Market Cap When Shares Granted:</b> ${dollar.format(item.gMC)}</li>
         <li>Initial Equity Percentage: ${item.equityPercentage}%</li>
         <li>Total Number Of Shares: ${item.shares}</li>
-        <li>Total Per Share Value (strike price) At Grant: $${item.pricePerShareGrant}</li>
-        <li>Total Value Of Shares At Grant: $${item.shareValueAtGrant}</li>
+        <li>Total Per Share Value (strike price) At Grant: ${dollar.format(item.pricePerShareGrant)}</li>
+        <li>Total Value Of Shares At Grant: ${dollar.format(item.shareValueAtGrant)}</li>
         </br>
         </div>
 
@@ -137,24 +144,24 @@ function displayData(){
         <p>These are the estimated dilution values of your equity from funding rounds. As a rough estimate we use this formula for dilution (Series A: 20%, Series B: 20%, Series C: 15%, Series D - F: 10%) if your company has raised 3 rounds post-seed, they're at a Series C stage and your equity has been diluted to around 49% of your initial ${item.equityPercentage}% equity stake.</p>
         <li>Total Funding Rounds: ${item.rounds}</li>
         <li>Total Diluted Equity Percentage Remaining: ${item.dilutedEquityPercentage}%</li>
-        <li>Current Equity Value After Dilution: $${item.dilutedEquityValue}</li>
+        <li>Current Equity Value After Dilution: ${dollar.format(item.dilutedEquityValue)}</li>
         </br>
         </div>
 
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border bg-light bg-gradient">
         <h4 class="h3 text-primary">Exercise Values</h4>
-        <li>Total Per Share Value At Exercise: $${item.pricePerShareEx}</li>
-        <li>Total Cost To Exercise Shares: $${item.costToExercise}</li>
-        <li>Current Total Per Share Value: $${item.pricePerShareCurrent}</li>
+        <li>Total Per Share Value At Exercise: ${dollar.format(item.pricePerShareEx)}</li>
+        <li>Total Cost To Exercise Shares: ${dollar.format(item.costToExercise)}</li>
+        <li>Current Total Per Share Value: ${dollar.format(item.pricePerShareCurrent)}</li>
         </br>
         </div>
 
         <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border">
         <h4 class="h3 text-primary">Exit Values</h4>
-        <li><b>Market Cap When Shares Exercised/Purchased:</b> $${item.tMCE}</li>
+        <li><b>Market Cap When Shares Exercised/Purchased:</b> ${dollar.format(item.tMCE)}</li>
         <li>Shares Sold: ${item.soldShares}</li>
-        <li>Shares Sold Value: $${item.soldShareValue}</li>
-        <li>Total Pre-Tax Profit From Share Sale: $${item.perShareProfit}</li>
+        <li>Shares Sold Value: ${dollar.format(item.soldShareValue)}</li>
+        <li>Total Pre-Tax Profit From Share Sale: ${dollar.format(item.perShareProfit)}</li>
         <li>Shares Remaining: ${item.remainingShares}</li>
         </div>
       
