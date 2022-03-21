@@ -103,6 +103,7 @@ function handleFormSubmit(e){
 //ONKEYUP: Print Realtime Form Input In Separate
 //x = mc; y = mcR
 
+const formIDS = ['marketcap', 'granted', 'exercised', 'equity-percentage', 'sell', 'total-rounds'];
 
 function realTimeText(x, y){
   let formInput = document.getElementById(x);
@@ -110,9 +111,9 @@ function realTimeText(x, y){
      document.getElementById(y).innerHTML = formInput.value;
    }
   }
-
- realTimeText('granted', 'grantedR');
-
+formIDS.forEach(e => {
+ realTimeText(e, e +'R');
+});
 //function to map listData array items, perform calculations and push to calcData array 
 
 function displayData(){
@@ -205,6 +206,7 @@ function mirrorState(){
 }
 
 //check users local storage. If null or equal to empty array (if deleted during session), we clearly don't want to try to pull nothing from local storage and display it...because...um...there would be nothing and wouldn't display. 
+
 function initLoadUI(){
   const tempLocalStorage = localStorage.getItem('equityDataContainer.list')
   if (tempLocalStorage === null || tempLocalStorage === [])return;
