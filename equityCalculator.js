@@ -100,20 +100,28 @@ function handleFormSubmit(e){
 }
 
 
-//ONKEYUP: Print Realtime Form Input In Separate
-//x = mc; y = mcR
+//ONKEYUP: Print Realtime Form Input In Separate Column
+//x = marketcap; y = marketcapR
 
 const formIDS = ['marketcap', 'granted', 'exercised', 'equity-percentage', 'sell', 'total-rounds'];
 
 function realTimeText(x, y){
   let formInput = document.getElementById(x);
    formInput.onkeyup = function(){
-     document.getElementById(y).innerHTML = formInput.value;
+     if (x === 'marketcap' || x === 'granted' || x === 'exercised'){
+     document.getElementById(y).innerHTML = dollar.format(formInput.value * 1_000_000);
+     } else if (x === 'equity-percentage' || x === 'sell'){
+      document.getElementById(y).innerHTML = percent.format(formInput.value / 100);
+   } else {
+    document.getElementById(y).innerHTML = formInput.value;
    }
   }
+}
 formIDS.forEach(e => {
  realTimeText(e, e +'R');
 });
+
+
 //function to map listData array items, perform calculations and push to calcData array 
 
 function displayData(){
