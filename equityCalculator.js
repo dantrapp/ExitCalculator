@@ -99,6 +99,20 @@ function handleFormSubmit(e){
   //displayData(); //execute display data function
 }
 
+
+//ONKEYUP: Print Realtime Form Input In Separate
+//x = mc; y = mcR
+
+
+function realTimeText(x, y){
+  let formInput = document.getElementById(x);
+   formInput.onkeyup = function(){
+     document.getElementById(y).innerHTML = formInput.value;
+   }
+  }
+
+ realTimeText('granted', 'grantedR');
+
 //function to map listData array items, perform calculations and push to calcData array 
 
 function displayData(){
@@ -206,6 +220,7 @@ function initLoadUI(){
   }
 
 //EVENT LISTENERS
+
 equityCalc.addEventListener('submit', handleFormSubmit); //browser runs 
 equityDataContainer.addEventListener('refreshData', displayData); //refresh equity data
 equityDataContainer.addEventListener('refreshData', mirrorState); //push state to local storage
