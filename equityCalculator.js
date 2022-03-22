@@ -130,7 +130,7 @@ function displayData(){
 
   //populate the UI from listData map
   const tempString = listData.map(item => `
-  <div class="row mb-4 border-bottom border-5 border-primary">
+  <div class="row-mb-4 mb-3 mb-2 border-bottom border-5 border-primary">
   <p class="h3 text-dark">Equity Data</p>
   </div>
   <div class="row gy-2">
