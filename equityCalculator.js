@@ -143,7 +143,7 @@ function displayData(){
 
         <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border" style="background-color: #fff;">
         <ul class="text-start">
-        <h4 class="h3 text-primary">Quick Numbers</h4>
+        <h3 class="text-primary">Quick Numbers</h3>
         <li><b>Total Company Market Cap (FMV):</b> ${dollar.format(item.tCMC)}</li>
         <li><b>Your Total Equity Stake Value (diluted):</b> ${dollar.format(item.dilutedEquityValue)}</li>
         <li><b>Your Total Equity Stake (diluted from ${percent.format(item.equityPercentage / 100)}):</b> ${percent.format(item.dilutedEquityPercentage / 100)}</li>
@@ -159,7 +159,7 @@ function displayData(){
 
         <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border bg-light bg-gradient">
         <ul class="text-start">
-        <h4 class="h3 text-primary">Grant Date Values</h4>
+        <h3 class="text-primary">Grant Date Values</h3>
         <p>These are the values of your equity/options at grant. For those who are granted shares pre-seed or at the seed stage as a founder or early employee, your strike price may be at or near par value of $0.001/share and would be filing a 83b election for Full Market Value of your equity stake (FMV) with the IRS within 30 days of grant date. In some cases the company will already have a 409a valuation at the seed stage and the current FMV divided by the total authorized shares of the company (typically 10m at formation) is the basis for strike price at grant. </p>
         <li><b>Market Cap When Shares Granted:</b> ${dollar.format(item.gMC)}</li>
         <li>Initial Equity Percentage: ${percent.format(item.equityPercentage / 100)}</li>
@@ -172,7 +172,7 @@ function displayData(){
 
         <div class="row gy-1 p-5 m-1  shadow-sm rounded-3 border" style="background-color: #FFF;">
         <ul class="text-start">
-        <h4 class="h3 text-primary">Dilution Values</h4>
+        <h3 class="text-primary">Dilution Values</h3>
         <p>These are the estimated dilution values of your equity from funding rounds. As a rough estimate we use this formula for dilution (Series A: 20%, Series B: 20%, Series C: 15%, Series D - F: 10%) if your company has raised 3 rounds post-seed, they're at a Series C stage and your equity has been diluted to around 49% of your initial ${percent.format(item.equityPercentage / 100)} equity stake.</p>
         <li>Total Funding Rounds: ${item.rounds}</li>
         <li>Total Diluted Equity Percentage Remaining: ${percent.format(item.dilutedEquityPercentage /100)}</li>
@@ -182,7 +182,7 @@ function displayData(){
 
         <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border bg-light bg-gradient">
         <ul class="text-start">
-        <h4 class="h3 text-primary">Exercise Values</h4>
+        <h4 class="h3 text-primary">Exercise Values</h3>
         <li>Total Per Share Value At Exercise: ${dollar.format(item.pricePerShareEx)}</li>
         <li>Total Cost To Exercise (${number.format(item.shares)}) Shares: ${dollar.format(item.costToExercise)}</li>
         <li>Current Total Per Share Value: ${dollar.format(item.pricePerShareCurrent)}</li>
@@ -190,8 +190,8 @@ function displayData(){
         </div>
 
         <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border">
-        <h4 class="h3 text-primary">Exit Values</h4>
         <ul class="text-start">
+        <h3 class="text-primary">Exit Values</h3>
         <li><b>Market Cap When Shares Exercised/Purchased:</b> ${dollar.format(item.tMCE)}</li>
         <li>Shares Sold: ${number.format(item.soldShares)}</li>
         <li>Shares Sold Value: ${dollar.format(item.soldShareValue)}</li>
