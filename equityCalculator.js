@@ -130,19 +130,19 @@ function displayData(){
 
   //populate the UI from listData map
   const tempString = listData.map(item => `
-  <div class="row-mb-4 mb-3 mb-2 border-bottom border-5 border-primary">
-  <p class="h3 text-dark">Equity Data</p>
-  </div>
-  <div class="row gy-2">
+  <div class="row">
     <div class="col">
-      <div class="card mb-4 rounded-5 shadow-sm border-light">
+      <div class="card w-100 rounded-5 shadow-sm border-light">
        <div class="card-header py-3 text-white bg-dark bg-gradient border-light">
+       
           <h4 class="my-4">Market Cap ${dollar.format(item.tCMC)}</h4>
           </div>
-        <div class="card-body">
-        <ul class="text-start">
 
-        <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border" style="background-color: #fff;">
+          <div class="card-body">
+    
+
+        <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border" style="background-color: #fff;">
+        <ul class="text-start">
         <h4 class="h3 text-primary">Quick Numbers</h4>
         <li><b>Total Company Market Cap (FMV):</b> ${dollar.format(item.tCMC)}</li>
         <li><b>Your Total Equity Stake Value (diluted):</b> ${dollar.format(item.dilutedEquityValue)}</li>
@@ -157,7 +157,8 @@ function displayData(){
         </div>
 
 
-        <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border bg-light bg-gradient">
+        <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border bg-light bg-gradient">
+        <ul class="text-start">
         <h4 class="h3 text-primary">Grant Date Values</h4>
         <p>These are the values of your equity/options at grant. For those who are granted shares pre-seed or at the seed stage as a founder or early employee, your strike price may be at or near par value of $0.001/share and would be filing a 83b election for Full Market Value of your equity stake (FMV) with the IRS within 30 days of grant date. In some cases the company will already have a 409a valuation at the seed stage and the current FMV divided by the total authorized shares of the company (typically 10m at formation) is the basis for strike price at grant. </p>
         <li><b>Market Cap When Shares Granted:</b> ${dollar.format(item.gMC)}</li>
@@ -169,7 +170,8 @@ function displayData(){
         </div>
 
 
-        <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border" style="background-color: #FFF;">
+        <div class="row gy-1 p-5 m-1  shadow-sm rounded-3 border" style="background-color: #FFF;">
+        <ul class="text-start">
         <h4 class="h3 text-primary">Dilution Values</h4>
         <p>These are the estimated dilution values of your equity from funding rounds. As a rough estimate we use this formula for dilution (Series A: 20%, Series B: 20%, Series C: 15%, Series D - F: 10%) if your company has raised 3 rounds post-seed, they're at a Series C stage and your equity has been diluted to around 49% of your initial ${percent.format(item.equityPercentage / 100)} equity stake.</p>
         <li>Total Funding Rounds: ${item.rounds}</li>
@@ -178,7 +180,8 @@ function displayData(){
         </br>
         </div>
 
-        <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border bg-light bg-gradient">
+        <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border bg-light bg-gradient">
+        <ul class="text-start">
         <h4 class="h3 text-primary">Exercise Values</h4>
         <li>Total Per Share Value At Exercise: ${dollar.format(item.pricePerShareEx)}</li>
         <li>Total Cost To Exercise (${number.format(item.shares)}) Shares: ${dollar.format(item.costToExercise)}</li>
@@ -186,8 +189,9 @@ function displayData(){
         </br>
         </div>
 
-        <div class="row gy-1 p-5 m-1 gx-5 shadow-sm rounded-3 border">
+        <div class="row gy-1 p-5 m-1 shadow-sm rounded-3 border">
         <h4 class="h3 text-primary">Exit Values</h4>
+        <ul class="text-start">
         <li><b>Market Cap When Shares Exercised/Purchased:</b> ${dollar.format(item.tMCE)}</li>
         <li>Shares Sold: ${number.format(item.soldShares)}</li>
         <li>Shares Sold Value: ${dollar.format(item.soldShareValue)}</li>
